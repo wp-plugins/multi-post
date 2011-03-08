@@ -1,10 +1,10 @@
 === Multi Post ===
-Contributors: yianniy
+Contributors: yianniy,yitg
 Donate link: http://example.com/
 Tags: wpmu,author,post,cross post
 Requires at least: 3.0
-Tested up to: 3.0.1
-Stable tag: 1.0
+Tested up to: 3.1
+Stable tag: 1.1
 
 Allow a user to author a post accross multiple blogs in the same Multi-Site install.
 
@@ -43,3 +43,28 @@ When you deselect a site from the Multi Post metabox, you are given the option t
 
 * delete - will remove the post from the deselected site.
 * orphan - will leave the post on the site, but disconnect it from the Multi Post system.
+
+== Changelog ==
+
+= 2.1.1 = 
+
+* Fixes but with redirection to Signup Page. (wp-signup.php)
+
+= 2.1 =
+
+* Fixed bug that prevented new users from registering.
+
+= 1.1 =
+* Fixed some PHP Warnings
+* Updated manner user capabilities are checked
+
+= 1.0 =
+* This is the first version.
+
+== Upgrade Notice ==
+
+= 1.1 =
+Corrected code to remove warning being thrown by PHP. Updated how user capabilities are check to comply with current version of Wordpress.
+
+= 1.0 =
+This is the first version.

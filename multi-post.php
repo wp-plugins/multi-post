@@ -3,12 +3,12 @@
 Plugin Name: Multi Post
 Plugin URI: http://itg.yale.edu/plugins/wordpress/multi-post
 Description: Allow a user to author a post accross multiple blogs in the same Multi-Site install.
-Version: 1.0
-Author: Ioannis C. Yessios
+Version: 1.1
+Author: Ioannis C. Yessios, Yale Instructional Technology Group
 Author URI: http://itg.yale.edu
 */
 
-/*  Copyright 2009 Ioannis C. Yessios (email : ioannis.yessios@yale.edu)
+/*  Copyright 2011 Ioannis C. Yessios (email : ioannis.yessios@yale.edu)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ Author URI: http://itg.yale.edu
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/* 
+	Thanks to Douglas Noble of Scotland's College for some fixes 02/07/11
+*/
+
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 define('MP_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
@@ -33,9 +37,9 @@ define('MP_PATH', dirname(__FILE__) . '/' );
 if( !class_exists( 'ITGMultiPost' ) ){
 	class ITGMultiPost {
 		function __construct () {
-			add_action( 'admin_init', array($this,admin_init) );
-			add_action( 'publish_post', array($this, publish_post) );
-			add_action( 'save_post', array($this, save_post) );
+			add_action( 'admin_init', array($this,'admin_init') );
+			add_action( 'publish_post', array($this, 'publish_post') );
+			add_action( 'save_post', array($this, 'save_post') );
 		}
 		
 		function admin_init () {
@@ -341,9 +345,9 @@ if( !class_exists( 'ITGMultiPost' ) ){
 				switch_to_blog($blog->userblog_id);
 				if ( $curblog != $blog->userblog_id &&
 						is_plugin_active( plugin_basename( dirname(__FILE__) ) . '/multi-post.php' ) ) {
-					$userlevel = "wp_{$blog->userblog_id}_user_level";
 					
-					if ( $user->$userlevel >= 2 ) {
+					
+					if ( current_user_can('publish_posts') ) {
 						$out[$blog->userblog_id] = $blog->blogname;
 					}
 				}
